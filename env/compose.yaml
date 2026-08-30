@@ -1,0 +1,15 @@
+services:
+  slam-vio:
+    build:
+      context: ..
+      dockerfile: env/Dockerfile
+    image: visual-slam-vio:humble-fortress
+    network_mode: host
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - ..:/workspace/repo:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    stdin_open: true
+    tty: true

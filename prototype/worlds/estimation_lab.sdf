@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="estimation_lab">
+    <gravity>0 0 -9.81</gravity>
+    <physics name="default_physics" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="libignition-gazebo-imu-system.so"
+            name="ignition::gazebo::systems::Imu"/>
+
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="estimator_rig">
+      <static>false</static>
+      <link name="base_link">
+        <pose>0 0 1 0 0 0</pose>
+        <inertial><mass>1.0</mass></inertial>
+
+        <sensor name="imu" type="imu">
+          <always_on>true</always_on>
+          <update_rate>200</update_rate>
+          <topic>/estimator/imu/data</topic>
+          <imu>
+            <angular_velocity>
+              <x><noise type="gaussian"><mean>0</mean><stddev>0.0002</stddev></noise></x>
+              <y><noise type="gaussian"><mean>0</mean><stddev>0.0002</stddev></noise></y>
+              <z><noise type="gaussian"><mean>0</mean><stddev>0.0002</stddev></noise></z>
+            </angular_velocity>
+            <linear_acceleration>
+              <x><noise type="gaussian"><mean>0</mean><stddev>0.002</stddev></noise></x>
+              <y><noise type="gaussian"><mean>0</mean><stddev>0.002</stddev></noise></y>
+              <z><noise type="gaussian"><mean>0</mean><stddev>0.002</stddev></noise></z>
+            </linear_acceleration>
+          </imu>
+        </sensor>
+
+        <sensor name="camera" type="camera">
+          <always_on>true</always_on>
+          <update_rate>20</update_rate>
+          <topic>/estimator/camera/image_raw</topic>
+          <camera_info_topic>/estimator/camera/camera_info</camera_info_topic>
+          <camera>
+            <horizontal_fov>1.047</horizontal_fov>
+            <image><width>640</width><height>480</height><format>R8G8B8</format></image>
+            <clip><near>0.05</near><far>100</far></clip>
+          </camera>
+        </sensor>
+      </link>
+    </model>
+  </world>
+</sdf>
