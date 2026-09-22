@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic VO frontend state machine, trajectory gate, and fault replay."""
+"""Deterministic visual-odometry frontend state machine, trajectory gate, and fault replay."""
 from __future__ import annotations
 
 import csv
@@ -135,7 +135,7 @@ def render_timeline(rows: list[dict]) -> np.ndarray:
     width, height = 1280, 720
     canvas = np.full((height, width, 3), 246, dtype=np.uint8)
     colors = {"BOOTSTRAP": (65, 145, 205), "TRACKING": (60, 165, 115), "DEGRADED": (45, 155, 215), "LOST": (55, 55, 205), "RECOVERING": (170, 105, 35)}
-    cv2.putText(canvas, "VO FRONTEND STATE AND AUTHORIZED POSE", (55, 55), cv2.FONT_HERSHEY_SIMPLEX, 0.85, (35, 45, 65), 2, cv2.LINE_AA)
+    cv2.putText(canvas, "VISUAL-ODOMETRY FRONTEND STATE AND AUTHORIZED POSE", (55, 55), cv2.FONT_HERSHEY_SIMPLEX, 0.85, (35, 45, 65), 2, cv2.LINE_AA)
     left, right, top, bottom = 70, 1230, 130, 570
     for row in rows:
         x0 = left + int((right - left) * row["frame"] / FRAMES)
@@ -224,7 +224,7 @@ def main() -> int:
     (OUT / "vo_failure_report.json").write_text(json.dumps(failure_report, indent=2) + "\n")
     cv2.imwrite(str(OUT / "vo_state_timeline.png"), render_timeline(rows))
     (OUT / "vo_run_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print("VO frontend replay:", manifest["status"])
+    print("visual-odometry frontend replay:", manifest["status"])
     print(json.dumps(manifest, indent=2))
     return 0 if manifest["status"] == "PASS" else 1
 

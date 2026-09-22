@@ -28,7 +28,7 @@ asserted without a reproducible numeric check, including the failure modes.
 - Metric PnP with RANSAC-style outlier rejection (`pnp_smoke.py`)
 - Multi-signal keyframe selection policy with hysteresis (`keyframe_policy_smoke.py`)
 - Landmark lifecycle / local-mapping state machine (`landmark_lifecycle_smoke.py`)
-- VO frontend state machine, trajectory gate, and fault replay (`vo_frontend_replay.py`)
+- visual-odometry frontend state machine, trajectory gate, and fault replay (`vo_frontend_replay.py`)
 
 **IMU modeling and preintegration**
 - Discrete SO(3) midpoint IMU integration vs. Euler control (`imu_discrete_integration_smoke.py`)
