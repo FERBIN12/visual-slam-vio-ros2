@@ -1,9 +1,2 @@
-__pycache__/
-*.pyc
 out/
-*.mp4
-*.wav
-*.onnx
-*.bin
-*.pt
-.DS_Store
+__pycache__/
