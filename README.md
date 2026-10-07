@@ -1,7 +1,7 @@
 # Visual SLAM and visual-inertial estimation: small experiments with known answers
 
-Twenty-three deterministic experiments that reproduce the numbers shown in the Visual SLAM course
-(camera geometry, feature-based visual odometry, IMU models, and the first steps of visual-inertial estimation).
+Twenty-five deterministic experiments that reproduce the numbers shown in the Visual SLAM course
+(camera geometry, feature-based visual odometry, IMU models, visual-inertial estimation and trajectory evaluation).
 
 Every experiment builds **synthetic data where the right answer is known**, runs a method, and then runs a
 **deliberately broken control** (wrong focal length, flipped sign, blurred image, two millimetre baseline, plain
@@ -30,13 +30,15 @@ no ROS, no GPU, no dataset download.
 | visual odometry | `pnp_smoke`, `keyframe_policy_smoke`, `landmark_lifecycle_smoke`, `vo_frontend_replay` | PnP with outliers and poor landmark geometry; keyframe insertion policy and its ablations; landmark promotion, culling and fusion; a front end state machine with fault injection and recovery |
 | IMU | `imu_discrete_integration_smoke`, `imu_bias_noise_smoke`, `imu_preintegration_smoke`, `imu_covariance_jacobian_smoke`, `imu_readiness_smoke` | midpoint integration against Euler, noise density and bias random walk with a Monte Carlo check, preintegration parity and bias correction, covariance and Jacobian propagation checked by sampling, data-quality checks on generated IMU streams |
 | initialization and marginalization | `vio_initialization_smoke`, `marginalization_smoke` | solving scale, gravity and accelerometer bias linearly, and the Schur-complement identity |
+| sliding window | `sliding_window_real` | a keyframe window that marginalizes old poses with a Schur-complement prior, against the full batch and against a window that drops the prior (30 seeds); cross-checked against scipy |
+| trajectory evaluation | `trajectory_eval_real` | ATE and RPE with SE(3) and Sim(3) alignment on a synthetic trajectory, and how scale, constant offsets, time offsets, swapped pose conventions and lever arms change the numbers; cross-checked against an SVD fit, scipy and, when installed, the `evo` package |
 
 ## What this repository does not contain
 
 - **No real dataset.** Everything is synthetic. The results show how methods behave under conditions you control,
   not how they perform on your robot, lens or building.
 - **No ORB-SLAM3 and no other external SLAM system is run here.**
-- **No ROS 2 nodes, Gazebo world or trajectory benchmark.** An earlier version of this repository listed "contract"
+- **No ROS 2 nodes, Gazebo world or public-dataset benchmark.** An earlier version of this repository listed "contract"
   scripts for those topics. They only checked hand-written configuration dictionaries and measured nothing, so they
   have been removed rather than left to suggest results that were never produced.
 - Some labs use noise-free data on purpose (for example the time-offset lab). Its tiny errors confirm that the model and the

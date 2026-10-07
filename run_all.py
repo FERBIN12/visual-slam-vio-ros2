@@ -35,6 +35,8 @@ LABS = [  # (script, args, report file, [(label, key path)])
     ("imu_readiness_smoke.py", [], None, []),
     ("vio_initialization_smoke.py", [], "vio_initialization_report.json", [("scale error", "errors.scale"), ("condition number, exciting motion", "exciting.condition_number")]),
     ("marginalization_smoke.py", [], "marginalization_report.json", [("reduced vs full solution, max error", "replay_max_error")]),
+    ("sliding_window_real.py", [], "sliding_window_real_report.json", [("window with prior, distance to the full batch (30-seed median), m", "thirty_seeds.window_prior_to_batch.median"), ("window without the prior, same, m", "thirty_seeds.window_drop_to_batch.median")]),
+    ("trajectory_eval_real.py", [], "trajectory_eval_real_report.json", [("scale error, ATE after SE3 alignment, m", "results.scale.ate_se3_m"), ("scale error, ATE after Sim3 alignment, m", "results.scale.ate_sim3_m"), ("swapped pose convention, ATE after Sim3, m", "results.swapped.ate_sim3_m")]),
 ]
 
 def dig(d, path):
